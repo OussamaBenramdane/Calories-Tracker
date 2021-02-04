@@ -32,6 +32,38 @@ const StorageCtrl = (function(){
                 items = JSON.parse(localStorage.getItem('items'));
             }
             return items;
+        },
+        updateItemStorage:function(updatedItem){
+
+            let items = JSON.parse(localStorage.getItem('items'));
+
+            items.forEach(function(item,index){
+                if(updatedItem.id=== item.id){
+                    items.splice(index , 1 , updatedItem);
+                }
+
+            });
+            // Reset Local storage
+            localStorage.setItem('items' ,JSON.stringify(items));
+
+        },
+        deleteItemFromStorage : function(id){
+            let items = JSON.parse(localStorage.getItem('items'));
+
+            items.forEach(function(item,index){
+                if(id=== item.id){
+                    items.splice(index , 1 );
+                }
+
+            });
+            // Reset Local storage
+            localStorage.setItem('items' ,JSON.stringify(items));
+
+        },
+        clearItemsFromStorage : function (){
+
+            localStorage.removeItem('items');
+
         }
     }
 })();
@@ -366,6 +398,9 @@ const App = (function(ItemCtrl,StorageCtrl,UICtrl){
         const totalCalories = ItemCtrl.getTotalCalories();
         //Add total calories to the UI
         UICtrl.showTotalCalories(totalCalories);
+        // Update local storage
+        StorageCtrl.updateItemStorage(updatedItem);
+
         UICtrl.clearEditState();
 
         e.preventDefault();
@@ -380,12 +415,13 @@ const App = (function(ItemCtrl,StorageCtrl,UICtrl){
             //Delete from the ui
             UICtrl.deleteListItem(currentItem.id);
 
-                //Get total calories
-                const totalCalories = ItemCtrl.getTotalCalories();
-                //Add total calories to the UI
-                UICtrl.showTotalCalories(totalCalories);
-                UICtrl.clearEditState();
-
+            //Get total calories
+            const totalCalories = ItemCtrl.getTotalCalories();
+            //Add total calories to the UI
+            UICtrl.showTotalCalories(totalCalories);
+            UICtrl.clearEditState();
+            //Delete from local storage
+            StorageCtrl.deleteItemFromStorage(currentItem.id);
             e.preventDefault();
          }
 
@@ -401,6 +437,9 @@ const App = (function(ItemCtrl,StorageCtrl,UICtrl){
 
         //Remove from the Ui
         UICtrl.removeItems();
+
+        //Remov frome local storage
+        StorageCtrl.clearItemsFromStorage();
         //Hide ul
         UICtrl.hideList();
 
