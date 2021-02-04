@@ -6,6 +6,9 @@ Calories tracker mini-app built with vanilla javascript using the module pattern
 
 For the UI we need [Bootstrap V4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) 
 and [Materialize ](https://materializecss.com/getting-started.html)
+## Screen Shots 
+![alt text](https://github.com/OussamaBenramdane/Calories-Tracker/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 
 ## Contributing
